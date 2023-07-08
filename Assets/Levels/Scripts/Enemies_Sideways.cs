@@ -1,0 +1,55 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemies_Sideways : MonoBehaviour
+{
+    [SerializeField] private float damage;
+    [SerializeField] private float speed;
+    [SerializeField] private float distance;
+    private bool movingLeft;
+    private float leftEdge;
+    private float rightEdge;
+
+    private void Awake()
+    {
+        leftEdge = transform.position.x - distance;
+        rightEdge = transform.position.x + distance;
+    }
+
+    private void Update()
+    {
+        if (movingLeft)
+        {
+            if (transform.position.x > leftEdge)
+            {
+                transform.position = new Vector3(transform.position.x - speed * Time.deltaTime, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                movingLeft = false;
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+        }
+        else
+        {
+            if (transform.position.x < rightEdge)
+            {
+                transform.position = new Vector3(transform.position.x + speed * Time.deltaTime, transform.position.y, transform.position.z);
+            }
+            else
+            {
+                movingLeft = true;
+                transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            }
+        }
+    
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+           
+        }
+    }
+}
