@@ -7,11 +7,11 @@ public class Tragetting : MonoBehaviour
     [SerializeField] private TilemapGridGenerator TMgene;
     [SerializeField] private Transform[] players;
     [SerializeField] private Transform[] coins;
-    private int[,] weigthMatix;
+    private int[,] weigthMatrix;
     private void Awake()
     {
 
-        weigthMatix = new int[(int)TMgene.getSize().x, (int)TMgene.getSize().x];
+        weigthMatrix = new int[(int)TMgene.getSize().x, (int)TMgene.getSize().x];
     }
     public void moveTagret()
     {
@@ -34,6 +34,23 @@ public class Tragetting : MonoBehaviour
                 }
             }
         }
+
+        int maxVal = int.MinValue;
+        Vector2Int BestPos=new Vector2Int();
+        for (int i = 0; i < TMgene.getSize().x; i++)
+        {
+            for (int j = 0; j < TMgene.getSize().x; j++)
+            {
+                if (weigthMatrix[i,j] > maxVal)
+                {
+                    maxVal = weigthMatrix[i, j];
+                    BestPos = new Vector2Int(i, j);
+                }
+
+            }
+        }
+
+        transform.position = TMgene.GetPositionInCell((Vector2)BestPos);
     }
     
 }
