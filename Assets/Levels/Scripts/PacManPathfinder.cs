@@ -88,19 +88,22 @@ public class PacManPathfinder : MonoBehaviour
         {
             Debug.Log("Target position is not reachable.");
         }
-
         return path;
     }
     private void Update()
     {
-        if (test)
+        if (movement.Queue_Length() == 0)
         {
             // Call the pathfinding method
             List<Vector2> path = FindPath(posInGrid, TMgenerator.WorldToGrid(targetTransform.position));
 
             // Do something with the path, e.g., pass it to GhostMove for movement
-            PrintPath(path);
-            test = false;
+            for (int i = 0; i < path.Count; i++)
+            {
+                Vector2Int pathPosition = Vector2Int.FloorToInt(path[i]);
+                Debug.Log(path[i]);
+                movement.Add_Move(pathPosition);
+            }
         }
     }
 }

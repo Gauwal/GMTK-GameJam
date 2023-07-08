@@ -32,7 +32,6 @@ public class GhostMove : MonoBehaviour
     public void Add_Move(Vector2Int Directionxy) 
     {
         queue.Enqueue(Directionxy);
-
     }
 
     public void Next_Move()
@@ -43,10 +42,15 @@ public class GhostMove : MonoBehaviour
         time_since_last_move = 0f;
     }
 
+    public int Queue_Length()
+    {
+        return queue.Count;
+    }
+
     private void Update()
     {
         
-        if (time_since_last_move < cellTravelTime)
+        if (time_since_last_move >= cellTravelTime)
         {
             transform.position = new Vector3(transform.position.x + (speed * Time.deltaTime * directionX), transform.position.y + (speed * Time.deltaTime * directionY), 0);
         }
