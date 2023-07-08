@@ -6,6 +6,12 @@ public class TilemapGridGenerator : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
     public int[,] gridMatrix;
 
+    private Vector2 size;
+
+    public Vector2 getSize()
+    {
+        return size;
+    }
     private void Awake()
     {
         GenerateGridMatrix();
@@ -40,7 +46,7 @@ public class TilemapGridGenerator : MonoBehaviour
     {
         BoundsInt bounds = tilemap.cellBounds;
         TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
-
+        size = new Vector2(bounds.size.x, bounds.size.y);
         gridMatrix = new int[bounds.size.x, bounds.size.y];
 
         for (int y = 0; y < bounds.size.y; y++)
@@ -64,7 +70,7 @@ public class TilemapGridGenerator : MonoBehaviour
         //PrintGridMatrix();
     }
     public Vector3 GetPositionInCell(Vector2 xy)
-        //gives coo of cell at matric position
+        //gives coo of cell at matrix position
     {
         Vector3Int cellPosition = tilemap.origin;
 
