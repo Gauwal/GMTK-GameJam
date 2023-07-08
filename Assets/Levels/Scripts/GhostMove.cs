@@ -50,15 +50,17 @@ public class GhostMove : MonoBehaviour
     private void Update()
     {
         
-        if (time_since_last_move >= cellTravelTime)
+        if (time_since_last_move <= cellTravelTime)
         {
             transform.position = new Vector3(transform.position.x + (speed * Time.deltaTime * directionX), transform.position.y + (speed * Time.deltaTime * directionY), 0);
+            
         }
         else
         {
             if (queue.Count > 0)
             {
                 Next_Move();
+                
             }
         }
         time_since_last_move += Time.deltaTime;

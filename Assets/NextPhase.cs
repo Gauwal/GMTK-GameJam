@@ -8,6 +8,6 @@ public class NextPhase : MonoBehaviour
     private void OnMouseDown()
     {
         eventHandler.NextPhase();
-        Debug.Log("hello");
+        Debug.Log("NextPhase");
     }
 }

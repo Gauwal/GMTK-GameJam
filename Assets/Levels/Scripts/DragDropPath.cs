@@ -17,7 +17,7 @@ public class DragDropPath : MonoBehaviour
 
     private GhostMove movement;
 
-    private int phase=1;
+    private int phase=0;
     public void SetPhase(int i) { phase = i; }
     private void Awake()
     {
@@ -85,7 +85,7 @@ public class DragDropPath : MonoBehaviour
         {
             direction.x = (path_placed[i] - currPos).x;
             direction.y = -(path_placed[i] - currPos).y;
-            Debug.Log(path_placed[i] - currPos);
+            
             movement.Add_Move(new Vector2Int((int)direction.x, (int)direction.y));
             currPos = path_placed[i];
         }
