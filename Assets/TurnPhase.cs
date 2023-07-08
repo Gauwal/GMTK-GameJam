@@ -8,7 +8,7 @@ public class TurnPhase : MonoBehaviour
     [SerializeField] private DragDropPath[] players;
     public void NextPhase()
     {
-        currentPhase++;
+        currentPhase+=1;
         switch (currentPhase)
         {
             case 1:
@@ -27,6 +27,7 @@ public class TurnPhase : MonoBehaviour
                 break;
             default:
                 currentPhase = 0;
+                Debug.Log("End");
                 break;
         }
     }

@@ -9,7 +9,7 @@ public class GhostMove : MonoBehaviour
     [SerializeField] public float speed;
     private int directionX;
     private int directionY;
-    private int currMoveNum;
+    private Queue<Vector2> queue;
 
 
 
@@ -22,21 +22,25 @@ public class GhostMove : MonoBehaviour
     private void Awake()
     {
         cellTravelTime = 1f / speed;
-        currMoveNum = 0;
+        
         time_since_last_move = 0;
         directionX = 0;
         directionY = 0;
+        queue = new Queue<Vector2>();
+    }
+
+    public void Add_Move(Vector2Int Directionxy) 
+    {
+        queue.Enqueue(Directionxy);
 
     }
 
-    public void Move(Vector2Int Directionxy) 
+    public void Next_Move()
     {
-        directionX = Directionxy.x;
-        directionY = Directionxy.y;
-       
+        Vector2 direction = queue.Dequeue();
+        directionX = (int)direction.x;
+        directionY = (int)direction.y;
         time_since_last_move = 0f;
-
-
     }
 
     private void Update()
@@ -45,6 +49,13 @@ public class GhostMove : MonoBehaviour
         if (time_since_last_move < cellTravelTime)
         {
             transform.position = new Vector3(transform.position.x + (speed * Time.deltaTime * directionX), transform.position.y + (speed * Time.deltaTime * directionY), 0);
+        }
+        else
+        {
+            if (queue.Count > 0)
+            {
+                Next_Move();
+            }
         }
         time_since_last_move += Time.deltaTime;
     }

@@ -78,14 +78,16 @@ public class DragDropPath : MonoBehaviour
 
     public void MoveAlongPath()
     {
-        currPos = transform.position;
-        Vector3 direction;
+        currPos = path_placed[0];
+        Vector3 direction = Vector3.zero;
 
-        for (int i = 0; i < maxPath; i++)
+        for (int i = 1; i < maxPath; i++)
         {
-            direction = (path_placed[i] - currPos);
-            Debug.Log(direction);
-            movement.Move(new Vector2Int((int)direction.x, (int)direction.y));
+            direction.x = (path_placed[i] - currPos).x;
+            direction.y = -(path_placed[i] - currPos).y;
+            Debug.Log(path_placed[i] - currPos);
+            movement.Add_Move(new Vector2Int((int)direction.x, (int)direction.y));
+            currPos = path_placed[i];
         }
-
+    }
 }
