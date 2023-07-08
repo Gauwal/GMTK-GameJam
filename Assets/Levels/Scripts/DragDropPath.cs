@@ -80,24 +80,12 @@ public class DragDropPath : MonoBehaviour
     {
         currPos = transform.position;
         Vector3 direction;
-        
+
         for (int i = 0; i < maxPath; i++)
         {
             direction = (path_placed[i] - currPos);
             Debug.Log(direction);
-            while (!movement.Time_To_Move())
-            {
-                StartCoroutine(MoveWithDelay());
-            }
             movement.Move(new Vector2Int((int)direction.x, (int)direction.y));
         }
-    }
-
-    IEnumerator MoveWithDelay()
-    {
-        yield return new WaitForSeconds(0.1f); // Wait for 1 second before moving
-
-        
-    }
 
 }
