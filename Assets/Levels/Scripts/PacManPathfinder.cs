@@ -5,17 +5,18 @@ using UnityEngine;
 public class PacManPathfinder : MonoBehaviour
 {
     [SerializeField] private Vector2 posInGrid;
+    [SerializeField] private Vector2 prevcase;
     [SerializeField] private TilemapGridGenerator TMgenerator;
     [SerializeField] private Transform targetTransform;
 
     private GhostMove movement;
 
-    private bool test = true;
+    private bool locker = true;
     private void Awake()
     {
         transform.position = TMgenerator.GetPositionInCell(posInGrid);
         movement = GetComponent<GhostMove>();
-
+        prevcase = posInGrid;
 
     }
     private void PrintPath(List<Vector2> path)
@@ -65,6 +66,10 @@ public class PacManPathfinder : MonoBehaviour
                 // Check if the neighbor is valid and not visited
                 if (TMgenerator.IsCellValid(neighbor) && !parentMap.ContainsKey(neighbor))
                 {
+
+                    //Add an heuristic like weigth = distfantom / distcoin
+
+
                     // Enqueue the neighbor and update its parent
                     queue.Enqueue(neighbor);
                     parentMap[neighbor] = current;
@@ -92,18 +97,30 @@ public class PacManPathfinder : MonoBehaviour
     }
     private void Update()
     {
-        if (movement.Queue_Length() == 0)
+        
+        if (locker)
         {
+            Debug.Log(goalnotreach);
+            locker = false;
+            
             // Call the pathfinding method
-            List<Vector2> path = FindPath(posInGrid, TMgenerator.WorldToGrid(targetTransform.position));
+            List<Vector2> path = FindPath(prevcase, TMgenerator.WorldToGrid(targetTransform.position));
 
-            // Do something with the path, e.g., pass it to GhostMove for movement
-            for (int i = 0; i < path.Count; i++)
+            PrintPath(path);
+            for (int i = 1; i < 2; i++)
             {
-                Vector2Int pathPosition = Vector2Int.FloorToInt(path[i]);
                 Debug.Log(path[i]);
+                Vector2Int pathPosition = new Vector2Int((int)(path[i][0] - prevcase[0]), -(int)(path[i][1] - prevcase[1]));
+
                 movement.Add_Move(pathPosition);
+                prevcase = path[i];
             }
+            if(prevcase = TMgenerator.WorldToGrid(targetTransform.position))
+            {
+                //getnewtarget;
+            }
+            locker = true;
         }
+        locker = movement.Time_To_Move(); 
     }
 }
