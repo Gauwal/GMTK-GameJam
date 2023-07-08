@@ -5,11 +5,14 @@ using UnityEngine;
 public class PacManPathfinder : MonoBehaviour
 {
     [SerializeField] private Vector2 posInGrid;
-    [SerializeField] private Vector2 prevcase;
+    private Vector2 prevcase;
     [SerializeField] private TilemapGridGenerator TMgenerator;
     [SerializeField] private Transform targetTransform;
 
     private GhostMove movement;
+
+    private int mouvspeed = 4;
+    private int nbmouv = 0;
 
     private bool locker = true;
     private void Awake()
@@ -98,15 +101,14 @@ public class PacManPathfinder : MonoBehaviour
     private void Update()
     {
         
-        if (locker)
+        if (locker && mouvspeed > nbmouv)
         {
-            Debug.Log(goalnotreach);
+            Debug.Log("Pos" + posInGrid);
             locker = false;
             
             // Call the pathfinding method
             List<Vector2> path = FindPath(prevcase, TMgenerator.WorldToGrid(targetTransform.position));
 
-            PrintPath(path);
             for (int i = 1; i < 2; i++)
             {
                 Debug.Log(path[i]);
@@ -115,11 +117,8 @@ public class PacManPathfinder : MonoBehaviour
                 movement.Add_Move(pathPosition);
                 prevcase = path[i];
             }
-            if(prevcase = TMgenerator.WorldToGrid(targetTransform.position))
-            {
-                //getnewtarget;
-            }
             locker = true;
+            nbmouv += 1;
         }
         locker = movement.Time_To_Move(); 
     }
