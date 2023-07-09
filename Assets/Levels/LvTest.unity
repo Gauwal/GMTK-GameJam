@@ -1307,6 +1307,7 @@ GameObject:
   - component: {fileID: 473715749}
   - component: {fileID: 473715754}
   - component: {fileID: 473715755}
+  - component: {fileID: 473715756}
   m_Layer: 0
   m_Name: Ghost (1)
   m_TagString: Untagged
@@ -1471,6 +1472,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ecf11d12241cd04ea0362c453447063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &473715756
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473715748}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5650dafed6c673947b6d3c774aba7c80, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &483609130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 875124918508527041, guid: 6aa7649c51b6bee46ac3814416237069, type: 3}
@@ -1524,6 +1544,7 @@ MonoBehaviour:
   players:
   - {fileID: 1920492299}
   - {fileID: 473715753}
+  - {fileID: 290022757}
   coins:
   - {fileID: 1481966190}
   - {fileID: 1482064682}
@@ -5144,6 +5165,7 @@ MonoBehaviour:
   players:
   - {fileID: 1920492300}
   - {fileID: 473715750}
+  - {fileID: 290022754}
   PacMan: {fileID: 1230757634}
   target: {fileID: 560432551}
   EndScore: 2
