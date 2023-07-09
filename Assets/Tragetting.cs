@@ -7,18 +7,52 @@ public class Tragetting : MonoBehaviour
     [SerializeField] private TilemapGridGenerator TMgene;
     [SerializeField] private Transform[] players;
     [SerializeField] private Transform[] coins;
-    private int[,] weigthMatrix;
+    [SerializeField] private Transform submarine;
+    private float[] costMatrix;
     private void Awake()
     {
-
-        weigthMatrix = new int[(int)TMgene.getSize().x, (int)TMgene.getSize().x];
+        costMatrix = new float[coins.Length];
+        //weigthMatrix = new int[(int)TMgene.getSize().x, (int)TMgene.getSize().x];
     }
     public void moveTagret()
     {
-        float value = 0;
+        Vector3 Pos = new Vector3(); ;
+        Vector3 distance;
+        for (int i = 0; i < coins.Length; i++)
+        {
+            Pos = coins[i].position;
+            costMatrix[i] = 0;
+            if (coins[i].GetComponent<SpriteRenderer>().enabled == true)
+            {
+                foreach (Transform player in players)
+                {
+                    distance = player.position - coins[i].position;
+                    costMatrix[i] += Mathf.Abs(distance.x) + Mathf.Abs(distance.y);
+                }
+            }
+            else
+            {
+                costMatrix[i] = int.MinValue;
+            }
+        }
+        float best = int.MinValue;
+        
+        for (int i = 0; i < coins.Length; i++)
+        {
+            if (costMatrix[i] > best)
+            {
+                Pos = coins[i].position;
+                best = costMatrix[i];
+            }
+        }
+        transform.position = Pos;
+
+
+        /*float value = 0;
         Vector2 Pos;
         for (int i = 0; i< TMgene.getSize().x; i++)
         {
+            
             value = 0;
             for (int j  = 0; j < TMgene.getSize().x; j++)
             {
@@ -50,7 +84,9 @@ public class Tragetting : MonoBehaviour
             }
         }
 
-        transform.position = TMgene.GetPositionInCell((Vector2)BestPos);
+        transform.position = TMgene.GetPositionInCell((Vector2)BestPos);*/
+
+
     }
     
 }

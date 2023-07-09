@@ -7,10 +7,11 @@ public class GhostMove : MonoBehaviour
 {
     private float time_since_last_move;
     [SerializeField] public float speed;
+    public float scale;
     private int directionX;
     private int directionY;
     private Queue<Vector2> queue;
-
+    private Animator anim;
 
 
 
@@ -27,6 +28,8 @@ public class GhostMove : MonoBehaviour
         directionX = 0;
         directionY = 0;
         queue = new Queue<Vector2>();
+        anim = GetComponent<Animator>();
+        scale = transform.localScale.x;
     }
 
     public void Add_Move(Vector2Int Directionxy) 
@@ -39,6 +42,29 @@ public class GhostMove : MonoBehaviour
         Vector2 direction = queue.Dequeue();
         directionX = (int)direction.x;
         directionY = (int)direction.y;
+        switch (direction.x, direction.y)
+        {
+            case (1,0) :
+                //right
+                transform.localScale = new Vector3(scale, scale,0);
+                anim.SetTrigger("Moving");
+                break;
+            case (-1, 0):
+                //left
+                transform.localScale = new Vector3(-scale, scale, 0);
+                anim.SetTrigger("Moving");
+                break;
+            case (0, 1):
+                //up
+                transform.localScale = new Vector3(transform.localScale.x, scale, 0);
+                anim.SetTrigger("Vertical");
+                break;
+            case (0, -1):
+                //down
+                transform.localScale = new Vector3(transform.localScale.x, -scale, 0);
+                anim.SetTrigger("Vertical");
+                break;
+        }
         time_since_last_move = 0f;
     }
 
@@ -46,6 +72,8 @@ public class GhostMove : MonoBehaviour
     {
         return queue.Count;
     }
+
+    
 
     private void Update()
     {

@@ -15,6 +15,12 @@ public class PacManPathfinder : MonoBehaviour
     private int nbmouv = 0;
 
     private bool locker = true;
+    private bool launch = false;
+    public void Launch()
+    {
+        launch = true;
+        nbmouv = 0;
+    }
     private void Awake()
     {
         transform.position = TMgenerator.GetPositionInCell(posInGrid);
@@ -98,12 +104,13 @@ public class PacManPathfinder : MonoBehaviour
         }
         return path;
     }
+
     private void Update()
     {
         
-        if (locker && mouvspeed > nbmouv)
+        if (locker && mouvspeed > nbmouv && launch)
         {
-            Debug.Log("Pos" + posInGrid);
+            
             locker = false;
             
             // Call the pathfinding method
@@ -111,7 +118,7 @@ public class PacManPathfinder : MonoBehaviour
 
             for (int i = 1; i < 2; i++)
             {
-                Debug.Log(path[i]);
+                
                 Vector2Int pathPosition = new Vector2Int((int)(path[i][0] - prevcase[0]), -(int)(path[i][1] - prevcase[1]));
 
                 movement.Add_Move(pathPosition);

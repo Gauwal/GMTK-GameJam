@@ -9,6 +9,7 @@ public class DragDropPath : MonoBehaviour
     [SerializeField] private int maxPath;
     [SerializeField] private Transform selector;
     [SerializeField] private GameObject[] PathBlocks;
+    [SerializeField] private Transform[] coins;
     private List<Vector3> path_placed;
     private Vector3 PosInGrid;
     private int numberPath;
@@ -19,6 +20,14 @@ public class DragDropPath : MonoBehaviour
 
     private int phase=0;
     public void SetPhase(int i) { phase = i; }
+    public bool PathFinished()
+    {
+        return numberPath == maxPath ;
+    }
+    public void SetNumberPath(int i)
+    {
+        numberPath = i;
+    }
     private void Awake()
     {
         path_placed = new List<Vector3>();
@@ -59,13 +68,23 @@ public class DragDropPath : MonoBehaviour
     }
     private void OnMouseDrag()
     {
+        bool coinValid = true;
         Vector3 positionGrid = TMgenerator.WorldToGrid(TMgenerator.GetCellAtPosition(GetMouseWorldPosition() + mouseOffset));
         if (phase == 1 && TMgenerator.IsCellValid(positionGrid)) { transform.position = TMgenerator.GetPositionInCell(positionGrid);}
         
         
         PosInGrid = TMgenerator.WorldToGrid(TMgenerator.GetCellAtPosition(GetMouseWorldPosition() + mouseOffset));
         
-        if (!path_placed.Contains(PosInGrid) && numberPath < maxPath && TMgenerator.IsCellValid(PosInGrid)&& (currPos-PosInGrid).magnitude<=1 && selected && phase==2)
+        foreach (Transform coin in coins)
+        {
+
+            if (coin.position.Equals(TMgenerator.GetPositionInCell(PosInGrid)) && coin.GetComponent<SpriteRenderer>().enabled)
+            {
+                coinValid = false;
+                
+            }
+        }
+        if (!path_placed.Contains(PosInGrid) && numberPath < maxPath && TMgenerator.IsCellValid(PosInGrid) && (currPos-PosInGrid).magnitude<=1 && selected && phase==2 && coinValid )
         {
             path_placed.Add(PosInGrid);
             PathBlocks[numberPath].GetComponent<SpriteRenderer>().enabled = true;
@@ -89,5 +108,6 @@ public class DragDropPath : MonoBehaviour
             movement.Add_Move(new Vector2Int((int)direction.x, (int)direction.y));
             currPos = path_placed[i];
         }
+        SetNumberPath(0);
     }
 }
