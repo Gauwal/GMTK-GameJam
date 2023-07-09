@@ -47,22 +47,26 @@ public class GhostMove : MonoBehaviour
             case (1,0) :
                 //right
                 transform.localScale = new Vector3(scale, scale,0);
-                anim.SetTrigger("Moving");
+                anim.SetBool("Vertical", false);
+                anim.SetBool("Moving", true);
                 break;
             case (-1, 0):
                 //left
                 transform.localScale = new Vector3(-scale, scale, 0);
-                anim.SetTrigger("Moving");
+                anim.SetBool("Vertical", false);
+                anim.SetBool("Moving", true);
                 break;
             case (0, 1):
                 //up
                 transform.localScale = new Vector3(transform.localScale.x, scale, 0);
-                anim.SetTrigger("Vertical");
+                anim.SetBool("Vertical", true);
+                anim.SetBool("Moving", false);
                 break;
             case (0, -1):
                 //down
                 transform.localScale = new Vector3(transform.localScale.x, -scale, 0);
-                anim.SetTrigger("Vertical");
+                anim.SetBool("Vertical", true);
+                anim.SetBool("Moving", false);
                 break;
         }
         time_since_last_move = 0f;
