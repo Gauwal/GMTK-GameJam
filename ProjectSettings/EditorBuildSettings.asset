@@ -12,6 +12,15 @@ EditorBuildSettings:
     path: Assets/Levels/LvTest.unity
     guid: 7bd0a1def6e195243a8ada5ae3567fd0
   - enabled: 1
-    path: Assets/Levels/Lv2.unity
-    guid: a31ed5a0a58a75b44888834d8f6b2693
+    path: Assets/Levels/LvTest 1.unity
+    guid: 1ca112ea19d5c664a97cfff1c828d579
+  - enabled: 1
+    path: Assets/Levels/LvTest 2.unity
+    guid: 3b24192cb77296248b55ff150da59f84
+  - enabled: 1
+    path: Assets/Levels/LvTest 3.unity
+    guid: 08777f45a8bd8134babeb9af7e754815
+  - enabled: 1
+    path: Assets/Levels/TitleScreen 1.unity
+    guid: a8c20401965db884482703ec056b6f18
   m_configObjects: {}

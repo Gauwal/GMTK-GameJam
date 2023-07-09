@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TurnPhase : MonoBehaviour
 {
-    private int currentPhase = 2;
+    public int currentPhase = 2;
     [SerializeField] private DragDropPath[] players;
     [SerializeField] private PacManPathfinder PacMan;
     [SerializeField] private Tragetting target;
@@ -31,6 +31,13 @@ public class TurnPhase : MonoBehaviour
         UI.SetDiamondAmout(PacScore, EndScore);
         if (PacScore >= EndScore)
         {
+            UI.Showskull();
+            currentPhase = 5;
+            foreach (DragDropPath player in players)
+            {
+                player.SetPhase(5);
+
+            }
             Debug.Log("YouLost");
         }
     }
@@ -69,13 +76,14 @@ public class TurnPhase : MonoBehaviour
                 }
                 else
                 {
+                    UI.ShowAvertissment();
                     Debug.Log("Must finnish all path !");
                 }
                 currentPhase = 2; 
 
                 break;
             default:
-                currentPhase = 0;
+                currentPhase = 5;
                 Debug.Log("End");
                 break;
         }
